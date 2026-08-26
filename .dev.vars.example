@@ -1,0 +1,3 @@
+# rename to .dev.vars
+SHARED_SECRET=dev-secret-change-me
+#DEVICE_SECRET=

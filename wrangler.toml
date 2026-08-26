@@ -1,0 +1,23 @@
+name = "dorm-lock"
+main = "src/index.js"
+compatibility_date = "2025-11-01"
+workers_dev = true
+
+[vars]
+POLL_TIMEOUT_MS = "25000" # poll hang time
+COMMAND_TIMEOUT_MS = "10000"
+COMMAND_TTL_MS = "60000"   # drop old cmds so they dont fire late
+# shortcuts breaks on non 200s so leave this 0
+STRICT_STATUS = "0"
+LOCK_NAME = "door"
+
+[[durable_objects.bindings]]
+name = "LOCK"
+class_name = "LockDO"
+
+# needs sqlite for free plan
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["LockDO"]
+
+# wrangler secret put SHARED_SECRET
