@@ -1,12 +1,12 @@
 # dorm-lock
 
-wip. esp32 + servo to turn the thumb-turn on my dorm door, controlled from my phone. this is the backend part so far - a cloudflare worker + durable object. no hardware yet.
+wip. esp32 + servo to turn the thumb-turn on my dorm door, controlled from my phone. this is the backend + phone side so far - a cloudflare worker + durable object and an ios shortcut. no hardware yet.
 
 ## status
 
 - [x] worker deployed, tests pass against it
 - [x] fake esp32 script so i can test without the board
-- [ ] ios shortcut
+- [x] ios shortcut + nfc tag ([SHORTCUTS.md](SHORTCUTS.md))
 - [ ] esp32 firmware
 - [ ] servo mount / 3d printed parts
 - [ ] rate limiting, DEVICE_SECRET
