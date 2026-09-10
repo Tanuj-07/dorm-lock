@@ -1,13 +1,14 @@
 # dorm-lock
 
-wip. esp32 + servo to turn the thumb-turn on my dorm door, controlled from my phone. this is the backend + phone side so far - a cloudflare worker + durable object and an ios shortcut. no hardware yet.
+wip. esp32 + servo to turn the thumb-turn on my dorm door, controlled from my phone. backend, phone side and a first pass at the firmware are here. the hardware is on my desk, not on the door yet.
 
 ## status
 
 - [x] worker deployed, tests pass against it
 - [x] fake esp32 script so i can test without the board
 - [x] ios shortcut + nfc tag ([SHORTCUTS.md](SHORTCUTS.md))
-- [ ] esp32 firmware
+- [ ] esp32 firmware - wip. connects to wifi and reaches the worker, but the wifi where the board is sits around -85 dBm and long polls were hanging. current version has a watchdog + 8s polls, havent confirmed it on the board yet
+- [ ] calibrate the servo angles
 - [ ] servo mount / 3d printed parts
 - [ ] rate limiting, DEVICE_SECRET
 
@@ -49,6 +50,18 @@ generate a secret with `node -e "console.log(require('crypto').randomBytes(32).t
 
 local dev: `cp .dev.vars.example .dev.vars`, then `npx wrangler dev`. .dev.vars doesnt override whats already in `[vars]` so change those in wrangler.toml
 
+## firmware
+
+`firmware/dorm_lock/`. arduino ide, board "ESP32 Dev Module", no extra libraries.
+
+1. copy `secrets.example.h` to `secrets.h` and fill it in (its gitignored)
+2. set `CALIBRATE_MODE 1`, upload, open serial at 9600 and type angles to find locked/unlocked. do this before attaching the servo to the lock
+3. put the angles in, set `CALIBRATE_MODE 0`, upload again
+
+wiring: servo signal on gpio 13, powered from its own 5v supply (not the esp32, it pulls way too much current), with the supply's - tied to the esp32 GND.
+
+tls is pinned to GTS Root R4 (what workers.dev uses) instead of setInsecure(), so nobody on the dorm wifi can grab the secret.
+
 ## testing
 
 no hardware needed. `device-sim` pretends to be the esp32, `e2e` pretends to be the phone. theres a bash and a powershell version of each
@@ -68,6 +81,6 @@ on windows use `curl.exe` not `curl`, and if powershell blocks the scripts run t
 
 ## notes
 
-- free tier is 100k req/day. the esp32 polling is basically all of it, 25s polls = ~3.5k/day. durable object duration (GB-s) is the thing to actually keep an eye on since the poll keeps it busy all day
-- the secret is basically the key to the door
+- free tier is 100k req/day. the esp32 polling is basically all of it - 25s polls = ~3.5k/day, the 8s polls the firmware uses right now = ~11k/day, both fine. durable object duration (GB-s) is the thing to actually keep an eye on since the poll keeps it busy all day
+- the secret is basically the key to the door. its in the shortcut and in secrets.h
 - keep a real key on you. wifi / power / cloudflare can all go down
