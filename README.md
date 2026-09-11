@@ -1,6 +1,19 @@
 # dorm-lock
 
-wip. esp32 + servo to turn the thumb-turn on my dorm door, controlled from my phone. backend, phone side and a first pass at the firmware are here. the hardware is on my desk, not on the door yet.
+This is a work in progress.. esp32 + servo to turn the thumb-turn on my dorm door, controlled from my phone. backend, phone side and a first pass at the firmware are here. the hardware is on my desk, not on the door yet.
+
+TLDR:
+Basically the ESP32 is a little chip that can both connect to wifi and control arduino servos. The ESP32 connects to wifi (in my case dorm wifi, which makes things considerably harder than a personal wifi connection). Then, the ESP32 also connects to the servo (dupont wires, nothing super complex). the servo I have is 20 kg·cm of torque, which is more than enough for the thumb turn lock. the ESP32 connection is already done, the connection to the servo is already done, and the actual wireless trigger mechanism with the shortcut/NFC tag is done too.
+
+The way it works, in essence, is that the shortcut on the phone connects to the cloudflare worker, sends a toggle command, and the ESP32 gets that command, which triggers the servo movement that locks/unlocks the door. That's all.
+
+So the final mechanism would be: 
+- Tap phone on NFC tag (placed somewhere on the door)
+- Shortcut sends command to Cloudflare worker
+- ESP32 gets the command, sends movement command to servo
+- servo moves, unlocks (or locks) the door. The shortcut just says toggle, and the worker turns that into an absolute locked/unlocked before the ESP32 sees it, so a double tap can't flip it back.
+
+Note: the servo locks movement when connected, so the 3D printed part that will be used for the servo to turn the lock will rest in a position that does not impede regular key usage. This avoids almost all failure modes, though there are things that could still break it, like power loss while the servo is in the middle of movement.
 
 ## status
 
