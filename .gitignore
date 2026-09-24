@@ -5,3 +5,4 @@ node_modules/
 # creds
 firmware/dorm_lock/secrets.h
 firmware/dorm_lock.txt
+firmware/dorm_lock_ble/secrets.h
