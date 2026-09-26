@@ -1,0 +1,7 @@
+{
+  "base": "https://dorm-lock.your-subdomain.workers.dev",
+  "secret": "the SHARED_SECRET from wrangler secret put",
+  "ble_name": "dorm-lock",
+  "ble_key": "64 hex chars, has to match BLE_KEY_HEX in firmware/dorm_lock_ble/secrets.h",
+  "poll_wait_ms": 25000
+}

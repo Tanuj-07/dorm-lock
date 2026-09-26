@@ -6,3 +6,6 @@ node_modules/
 firmware/dorm_lock/secrets.h
 firmware/dorm_lock.txt
 firmware/dorm_lock_ble/secrets.h
+bridge/config.json
+bridge/*.log
+__pycache__/
