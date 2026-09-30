@@ -78,7 +78,12 @@ class Lock:
 
         while True:
             log.info("scanning for %s ...", BLE_NAME)
-            dev = await BleakScanner.find_device_by_name(BLE_NAME, timeout=10)
+            try:
+                dev = await BleakScanner.find_device_by_name(BLE_NAME, timeout=10)
+            except Exception as e:  # bluetooth off, not authorized yet, or not ready at boot
+                log.warning("ble scan failed: %s", e)
+                await asyncio.sleep(5)
+                continue
             if dev is None:
                 await asyncio.sleep(3)
                 continue
