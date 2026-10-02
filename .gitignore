@@ -9,3 +9,5 @@ firmware/dorm_lock_ble/secrets.h
 bridge/config.json
 bridge/*.log
 __pycache__/
+*.bak-*
+bridge/DormLockBridge.app/Contents/MacOS/
