@@ -2,6 +2,12 @@
 
 This is a work in progress.. esp32 + servo to turn the thumb-turn on my dorm door, controlled from my phone. the mechanics are done, tapping my phone on the nfc tag spins the servo in under a second. the only thing left is mounting it on the door (3d printed parts).
 
+demo video coming soon
+
+<img src="docs/setup-1.jpg" width="48%"> <img src="docs/setup-2.jpg" width="48%">
+
+esp32 + the 20kg servo, and the wiring (5v supply goes into the green terminal block). not mounted yet, just on my desk
+
 TLDR:
 Basically the ESP32 is a little chip that can do wifi and bluetooth and control arduino servos. Originally the ESP32 connected to the dorm wifi directly, but where the door is the signal is around -85 dBm and the connection kept hanging. So now my Mac (which is always on anyway) does the internet part: it talks to the Cloudflare worker and sends the commands to the ESP32 over bluetooth. The ESP32 doesn't touch wifi at all anymore. The ESP32 connects to the servo with dupont wires, nothing super complex. the servo I have is 20 kg·cm of torque, which is more than enough for the thumb turn lock.
 
