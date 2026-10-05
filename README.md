@@ -18,7 +18,7 @@ tap nfc tag -> ios shortcut -> cloudflare worker -> mac -> bluetooth -> esp32 ->
 - my mac is always polling the worker, picks it up and sends it to the esp32 over bluetooth
 - the esp32 moves the servo and reports back, so the phone shows if it actually worked
 
-why the mac: at first the esp32 was on the dorm wifi itself, but the signal at the door is like -85 dBm and the connection kept hanging. my mac is on 24/7 anyway bc it runs my polymarket bot (separate project, github link soon), so now it does the internet part and the esp32 only does bluetooth.
+why the mac: at first the esp32 was on the dorm wifi itself, but the signal at the door is like -85 dBm and the connection kept hanging. my mac is on 24/7 anyway bc it runs my polymarket bot ([prediction-market-making](https://github.com/Tanuj-07/prediction-market-making)), so now it does the internet part and the esp32 only does bluetooth.
 
 the worker turns "toggle" into an absolute locked/unlocked, so a double tap cant flip it back, and old cmds expire after 60s so nothing fires late. the bluetooth cmds are signed so some random phone nearby cant unlock it.
 
